@@ -1,3 +1,61 @@
+# 4.0.5 (November 15, 2016)
+
+Fixes an embarrassing bug in the unwrapRootArrayParser that made the parser
+ignore any output after an array entry at depth 1. (I.e. a direct child of the
+root array.)
+
+*This fix exists in the v4.0.5 tag, and the v4.0.x branch, but not on master as
+that has moved on too much.*
+
+# 4.0.4: No Crashes On Invalid UTF-8 Found 
+
+(November 3rd, 2016)
+
+Oh, er, well, this is a bit embarrassing. It turns out my tests were
+insufficently devious, and did not guard against invalid UTF-8 encodings. I
+thought I could punt on UTF-8 validation and rely on `[NSString
+initWithBytes:length:encoding]` to do it, but then Nicolas Seriot reported
+otherwise ([issue #219][issue-219]). The upshoot of this is that this version
+won't crash on a whole range invalid UTF-8 byte sequences where previous
+versions crashed did:
+
+* Flat-out illegal UTF-8 byte values
+* Missing continuation bytes
+* Unexpected continuation bytes
+* Overlong encodings
+* Invalid Unicode code points
+
+After 9 years of calling SBJson a strict JSON parser I've finally implemented
+UTF-8 validation. Thank you for the learning opportunity Nicolas!
+
+[issue-219]: https://github.com/stig/json-framework/issues/219
+
+Also in this release:
+
+* Recreate the project file and targets using Xcode 8.
+* Re-organising the frankly bonkers repo layout to hopefully make it easier
+  for casual contributors to find their way around.
+* Fix the Travis build; this had broken due to bit rot.
+
+4.0.3 (July 7th, 2016)
+======================
+
+* [`207dfa3`](https://github.com/stig/json-framework/commit/207dfa39913644629407028b27386905e39c1698) Adjust Travis CI configuration (#1)
+* [`191b0ad`](https://github.com/stig/json-framework/commit/191b0ad920e2f3e72d806b6dcbd32664c26ea5d3) Rename Carthage Mac target
+* [`23e47df`](https://github.com/stig/json-framework/commit/23e47df2f4f9b95758e910bd2b83abe91551071b) Update README.md
+* [`ed536b5`](https://github.com/stig/json-framework/commit/ed536b56b72c6af27ae339f4bbcc721f47764b33) Add Carthage iOS target
+* [`d53dfe4`](https://github.com/stig/json-framework/commit/d53dfe4242febb8f8e3d18b6401ef283587bcb90) Add repo status to README
+* [`4ca1d84`](https://github.com/stig/json-framework/commit/4ca1d8488576fed943d842c91a69bb4520f2070a) Replace deprecated method with alternative
+* [`d088bd1`](https://github.com/stig/json-framework/commit/d088bd155f26bd875bfd2236ccc6f08f8960e439) Add codecov badge to README
+* [`4e7df93`](https://github.com/stig/json-framework/commit/4e7df93c0226fb0afb2702669103f94c3a6cc438) Make variable private
+* [`2983d71`](https://github.com/stig/json-framework/commit/2983d71f82282af64a9e08c3356c200d388d6f76) Attempt at adding code test coverage metrics
+* [`959f5bd`](https://github.com/stig/json-framework/commit/959f5bd8e08739571913fa25ef0a3b3617e109c8) Make link (hopefully) to LICENCE
+* [`52ab522`](https://github.com/stig/json-framework/commit/52ab522ab8f6c5365e67f2c9066534eae8e3777d) Add a top-level heading to README
+* [`abe079d`](https://github.com/stig/json-framework/commit/abe079d50e3045ee4c2729a2ee9461f6d901a2ab) Update to-date on license
+* [`bff9599`](https://github.com/stig/json-framework/commit/bff9599770e825d8923bd0e732cd8df68aafc4a3) Remove prefix headers
+* [`2fbe784`](https://github.com/stig/json-framework/commit/2fbe7843fe6f921bcf1b91c6db5873b6e909e814) Use Xcodebuild rather than xctool
+* [`5f63aa0`](https://github.com/stig/json-framework/commit/5f63aa035acd3efa6a8e6f2f5251a5816b39516e) Add Gitter URL to README
+
 4.0.2 (June 24th, 2015)
 =======================
 
